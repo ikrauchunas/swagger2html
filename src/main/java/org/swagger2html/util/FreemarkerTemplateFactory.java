@@ -1,42 +1,39 @@
 package org.swagger2html.util;
 
-import java.io.IOException;
+import freemarker.template.*;
 
-import freemarker.template.Configuration;
-import freemarker.template.DefaultObjectWrapper;
-import freemarker.template.Template;
+import java.io.*;
 
 /**
- * 
  * @author chenjianjx@gmail.com
- *
  */
 public class FreemarkerTemplateFactory {
 
-	private static FreemarkerTemplateFactory instance;
+    private static FreemarkerTemplateFactory instance;
 
-	public static FreemarkerTemplateFactory getInstance() {
-		if (null == instance) {
-			instance = new FreemarkerTemplateFactory();
-		}
-		return instance;
-	}
+    private FreemarkerTemplateFactory() {
 
-	private FreemarkerTemplateFactory() {
+    }
 
-	}
+    public static FreemarkerTemplateFactory getInstance() {
 
-	public Template getClasspathTemplate(String ftlClasspath) {
-		Configuration configuration = new Configuration();
-		configuration.setLocalizedLookup(false);
-		configuration.setObjectWrapper(new DefaultObjectWrapper());
-		configuration.setClassForTemplateLoading(
-				FreemarkerTemplateFactory.class, "/");
-		try {
-			return configuration.getTemplate(ftlClasspath);
-		} catch (IOException e) {
-			throw new IllegalStateException(ftlClasspath, e);
-		}
-	}
+        if (null == instance) {
+            instance = new FreemarkerTemplateFactory();
+        }
+        return instance;
+    }
 
+    public Template getClasspathTemplate(String ftlClasspath) {
+
+        Configuration configuration = new Configuration();
+        configuration.setLocalizedLookup(false);
+        configuration.setObjectWrapper(new DefaultObjectWrapper());
+        configuration.setClassForTemplateLoading(
+            FreemarkerTemplateFactory.class, "/");
+        try {
+            return configuration.getTemplate(ftlClasspath);
+        } catch (IOException e) {
+            throw new IllegalStateException(ftlClasspath, e);
+        }
+    }
 }
